@@ -10,6 +10,9 @@ dir_wordlist = "/usr/share/dirb/wordlists/big.txt"
 sub_wordlist = "/usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt"
 hostname = ""; 
 ip_address ="";
+subdomains = True
+
+
 def run_command(command):
     os.system(command)
 
@@ -22,8 +25,11 @@ def ffuf_dir_enum():
     run_command(f"ffuf -w {dir_wordlist} -u {hostname}/FUZZ -t 100 -o {hostname}.dirs")
 
 def ffuf_sub_enum():
-    logging.info("Starting subdomain enumeration")
-    run_command(f"ffuf -w {sub_wordlist} -u FUZZ.{hostname} -t 100 -o {hostname}.subs")
+    if (subdomains):
+        logging.info("Starting subdomain enumeration")
+        run_command(f"ffuf -w {sub_wordlist} -u FUZZ.{hostname} -t 100 -o {hostname}.subs")
+    else:
+        logging.info("Subdomain enumeration not possible, please define hostname with -u")
 
 
 def main(args, loglevel):
@@ -34,6 +40,7 @@ def main(args, loglevel):
         hostname = args.hostname
     except AttributeError:
         hostname = args.ip_address
+        subdomains = False
     
     ip_address = args.ip_address
 
