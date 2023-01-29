@@ -25,6 +25,7 @@ def ffuf_dir_enum():
     run_command(f"ffuf -w {dir_wordlist} -u {hostname}/FUZZ -t 100 -o {hostname}.dirs")
 
 def ffuf_sub_enum():
+    print(subdomains)
     if (subdomains):
         logging.info("Starting subdomain enumeration")
         run_command(f"ffuf -w {sub_wordlist} -u FUZZ.{hostname} -t 100 -o {hostname}.subs")
@@ -38,10 +39,11 @@ def main(args, loglevel):
 
     try:
         hostname = args.hostname
+        print(args.hostname + "HOSTNAME??!?!?")
     except AttributeError:
         subdomains = False
         hostname = args.ip_address
-    
+        print(subdomains + "HOSTNAME??!?!?")
     ip_address = args.ip_address
 
     nmap_scan()
@@ -52,7 +54,7 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
     parser.add_argument("-ip", "--ip_address", dest = "ip_address", default = "", help="IP addr")
-    parser.add_argument("-u", "--hostname", dest = "hostname", default = "0.0.0.0", help="Hostname")
+    parser.add_argument("-u", "--hostname", dest = "hostname", help="Hostname")
     parser.add_argument( "-v", "--verbose", help="increase output verbosity",  action="store_true")
     # TODO User chosen tools
     args = parser.parse_args()
