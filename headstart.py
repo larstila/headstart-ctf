@@ -12,7 +12,8 @@ def main(args, loglevel):
 
     # TODO open new terminal windows for each task
     # TODO write output
-
+    if (args.hostname is None):
+        hostname = ip_
     ip_address = args.hostname 
     output_file = args.output 
     logging.debug("Hostname: %s" %ip_address)
@@ -25,9 +26,10 @@ def main(args, loglevel):
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("-u", "--hostname", dest = "hostname", default = "0.0.0.0", help="Hostname/IP addr")
+    parser.add_argument("-ip", "--ip_address", dest = "ip_address", default = "", help="IP addr")
+    parser.add_argument("-u", "--hostname", dest = "hostname", default = "0.0.0.0", help="Hostname")
     parser.add_argument("-o", "--output", dest = "output", default = "output", help="Name of the service/CTF, used for saving outputs")
-    parser.add_argument("-dw", "--directorywordlist", dest = "directorywordlist", default = "/usr/share/wordlist/", help="direcory wordlist")
+    # TODO parser.add_argument("-dw", "--directorywordlist", dest = "directorywordlist", default = "/usr/share/wordlist/", help="direcory wordlist")
     parser.add_argument( "-v", "--verbose", help="increase output verbosity",  action="store_true")
     # TODO User chosen tools
     args = parser.parse_args()
