@@ -17,11 +17,11 @@ def nmap_scan(ip_address, output_file):
 
 def ffuf_dir_enum(hostname, output_file):
     logging.info("Starting ffuf direcory enumeration")
-    run_command(f"ffuf -w {dir_wordlist} -u {hostname}/FUZZ -t 100 -o {output_file}")
+    run_command(f"ffuf -w {dir_wordlist} -u {hostname}/FUZZ -t 100 -o {output_file}.dirs")
 
 def ffuf_sub_enum(hostname, output_file):
     logging.info("Starting subdomain enumeration")
-    run_command(f"ffuf -w {sub_wordlist} -u FUZZ.{hostname} -t 100 -o {output_file}")
+    run_command(f"ffuf -w {sub_wordlist} -u FUZZ.{hostname} -t 100 -o {output_file}.subs")
 
 import subprocess
 
