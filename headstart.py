@@ -25,44 +25,39 @@ def ffuf_dir_enum():
     run_command(f"ffuf -w {dir_wordlist} -u {hostname}/FUZZ -t 100 -o {hostname}.dirs")
 
 def ffuf_sub_enum():
-    print(subdomains)
     if (subdomains):
         logging.info("Starting subdomain enumeration")
         run_command(f"ffuf -w {sub_wordlist} -u FUZZ.{hostname} -t 100 -o {hostname}.subs")
     else:
         logging.info("Subdomain enumeration not possible, please define hostname with -u")
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-ip", "--ip_address", dest = "ip_address", help="IP addr")
+parser.add_argument("-u", "--hostname", dest = "hostname", help="Hostname")
+parser.add_argument( "-v", "--verbose", help="increase output verbosity",  action="store_true")
+# TODO User chosen tools
+args = parser.parse_args()
 
-def main(args, loglevel):
-    logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
-    logging.info("A script to give you a headstart to a CTF")
+if (args.ip_address == None):
+    print("Please input ip address with -ip or --ip_address")
+    sys.exit(1)
+# Setup logging
+if args.verbose:
+    loglevel = logging.DEBUG
+else:
+    loglevel = logging.INFO
 
-    try:
-        hostname = args.hostname
-        print(args.hostname + "HOSTNAME??!?!?")
-    except AttributeError:
-        subdomains = False
-        hostname = args.ip_address
-        print(subdomains + "HOSTNAME??!?!?")
-    ip_address = args.ip_address
+logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
+logging.info("A script to give you a headstart to a CTF")
 
-    nmap_scan()
-    ffuf_dir_enum()
-    ffuf_sub_enum()
-    
-if __name__ == '__main__':
-    
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-ip", "--ip_address", dest = "ip_address", default = "", help="IP addr")
-    parser.add_argument("-u", "--hostname", dest = "hostname", help="Hostname")
-    parser.add_argument( "-v", "--verbose", help="increase output verbosity",  action="store_true")
-    # TODO User chosen tools
-    args = parser.parse_args()
-    
-    # Setup logging
-    if args.verbose:
-        loglevel = logging.DEBUG
-    else:
-        loglevel = logging.INFO
-    
-    main(args, loglevel)
+if (args.hostname == None):
+    subdomains = False
+    hostname = args.ip_address
+else:
+    hostname = args.hostname
+
+ip_address = args.ip_address
+
+nmap_scan()
+ffuf_dir_enum()
+ffuf_sub_enum()
