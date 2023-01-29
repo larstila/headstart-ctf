@@ -8,7 +8,7 @@ import subprocess
 
 dir_wordlist = "/usr/share/dirb/wordlists/big.txt"
 sub_wordlist = "/usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt"
-
+hostname; ip_address;
 def run_command(command):
     os.system(command)
 
@@ -28,20 +28,15 @@ def ffuf_sub_enum():
 def main(args, loglevel):
     logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
     logging.info("A script to give you a headstart to a CTF")
-    logging.info("Runs nmap, direcory and subdomain enumeration with ffuf and ???")
 
-    check_tools()
-    
     try:
         hostname = args.hostname
     except AttributeError:
         hostname = args.ip_address
     
     ip_address = args.ip_address
-    output_file = args.output
 
     logging.debug("Hostname: %s" %ip_address)
-    logging.debug("Output: %s" %output_file)
 
     nmap_scan()
     ffuf_dir_enum()
@@ -52,7 +47,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-ip", "--ip_address", dest = "ip_address", default = "", help="IP addr")
     parser.add_argument("-u", "--hostname", dest = "hostname", default = "0.0.0.0", help="Hostname")
-    # TODO parser.add_argument("-dw", "--directorywordlist", dest = "directorywordlist", default = "/usr/share/wordlist/", help="direcory wordlist")
     parser.add_argument( "-v", "--verbose", help="increase output verbosity",  action="store_true")
     # TODO User chosen tools
     args = parser.parse_args()
