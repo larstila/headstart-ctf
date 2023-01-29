@@ -30,7 +30,7 @@ headstart -ip <ip_address> -o <name for output files>
 ###Default wordlists:
 ```
 dir_wordlist = "/usr/share/dirb/wordlists/big.txt"
-sub_wordlist = "/usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt"
+sub_wordlist = "/usr/share/wordlists/amass/subdomains-top1mil-110000.txt"
 ```
 
 Special thanks to ChatGPT for helping me write this. 

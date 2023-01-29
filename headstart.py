@@ -7,7 +7,7 @@ import subprocess
 #You can change the used wordlists
 
 dir_wordlist = "/usr/share/dirb/wordlists/big.txt"
-sub_wordlist = "/usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt"
+sub_wordlist = "/usr/share/wordlists/amass/subdomains-top1mil-110000.txt "
 hostname = ""; 
 ip_address ="";
 subdomains = True
@@ -39,12 +39,10 @@ def main(args, loglevel):
     try:
         hostname = args.hostname
     except AttributeError:
-        hostname = args.ip_address
         subdomains = False
+        hostname = args.ip_address
     
     ip_address = args.ip_address
-
-    logging.debug("Hostname: %s" %ip_address)
 
     nmap_scan()
     ffuf_dir_enum()
