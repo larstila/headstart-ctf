@@ -8,7 +8,8 @@ import subprocess
 
 dir_wordlist = "/usr/share/dirb/wordlists/big.txt"
 sub_wordlist = "/usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt"
-hostname; ip_address;
+hostname = ""; 
+ip_address ="";
 def run_command(command):
     os.system(command)
 
