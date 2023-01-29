@@ -2,26 +2,31 @@
 
 import sys, argparse, logging
 import os
-from utils import nmap_scan, ffuf_dir_enum, ffuf_sub_enum
+from utils import check_tools, nmap_scan, ffuf_dir_enum, ffuf_sub_enum
 
 def main(args, loglevel):
     logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
     logging.info("A script to give you a headstart to a CTF")
     logging.info("Runs nmap, direcory and subdomain enumeration with ffuf and ???")
+
+    check_tools()
     # TODO nmap, ffuf direcories, ffuf subdomains
 
     # TODO open new terminal windows for each task
     # TODO write output
-    if (args.hostname is None):
-        hostname = ip_
-    ip_address = args.hostname 
-    output_file = args.output 
+    try:
+        hostname = args.hostname
+    except AttributeError:
+        hostname = args.ip_address
+    ip_address = args.ip_address
+    output_file = args.output
+
     logging.debug("Hostname: %s" %ip_address)
     logging.debug("Output: %s" %output_file)
 
     nmap_scan(ip_address, output_file)
-    ffuf_dir_enum(ip_address, output_file)
-    ffuf_sub_enum(ip_address, output_file)
+    ffuf_dir_enum(hostname, output_file)
+    ffuf_sub_enum(hostname, output_file)
     
 if __name__ == '__main__':
     

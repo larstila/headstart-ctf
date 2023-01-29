@@ -1,6 +1,6 @@
-import os, logging
+import os, logging, sys
 
-logging.basicConfig(format="%(levelname)s: %(message)s", level=INFO)
+logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
 #You can change the used wordlists
 
@@ -22,3 +22,15 @@ def ffuf_dir_enum(hostname, output_file):
 def ffuf_sub_enum(hostname, output_file):
     logging.info("Starting subdomain enumeration")
     run_command(f"ffuf -w {sub_wordlist} -u FUZZ.{hostname} -t 100 -o {output_file}")
+
+import subprocess
+
+def check_tools():
+    tools = ['nmap', 'ffuf']
+    for tool in tools:
+        try:
+            subprocess.run([tool, '--version'], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            logging.info(f"{tool} is installed.")
+        except subprocess.CalledProcessError:
+            logging.info(f"Error: {tool} is not installed.")
+            sys.exit(1)

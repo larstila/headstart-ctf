@@ -8,3 +8,6 @@ todo add scripts lol
 
 
 Special thanks to ChatGPT for helping me write this. 
+
+
+# TODO add other scripts, like sqlmap 
